@@ -1,0 +1,88 @@
+/dts-v1/;
+
+#include "ast2400.dtsi"
+#include <dt-bindings/gpio/gpio.h>
+
+/ {
+	model = "Barrelye BMC";
+	compatible = "rackspace,barreleye-bmc", "aspeed,ast2400";
+	ahb {
+		mac0: ethernet@1e660000 {
+			use-nc-si;
+			no-hw-checksum;
+		};
+
+		fmc@1e620000 {
+			reg = < 0x1e620000 0x94
+				0x20000000 0x02000000 >;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			compatible = "aspeed,fmc";
+			flash@0 {
+				reg = < 0 >;
+				compatible = "jedec,spi-nor" ;
+				/*
+				 * Possibly required props:
+				 * spi-max-frequency = <>
+				 * spi-tx-bus-width = <>
+				 * spi-rx-bus-width  = <>
+				 * m25p,fast-read
+				 * spi-cpol if inverse clock polarity (CPOL)
+				 * spi-cpha if shifted clock phase (CPHA)
+				 */
+#include "aspeed-bmc-opp-flash-layout.dtsi"
+			};
+		};
+		spi@1e630000 {
+			reg = < 0x1e630000 0x18
+				0x30000000 0x02000000 >;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			compatible = "aspeed,smc";
+			flash {
+				reg = < 0 >;
+				compatible = "jedec,spi-nor" ;
+				label = "pnor";
+				/* spi-max-frequency = <>; */
+				/* m25p,fast-read; */
+			};
+		};
+		apb {
+			i2c: i2c@1e78a040 {
+				i2c1: i2c-bus@80 {
+					lm75@9E {
+						compatible = "national,lm75";
+						reg = <0x9E>;
+					};
+					lm75@9C {
+						compatible = "national,lm75";
+						reg = <0x9C>;
+					};
+				};
+				i2c2: i2c-bus@80 {
+					eeprom@AC {
+						compatible = "atmel,24c256";
+						reg = <0xAC>;
+						pagesize = <64>;
+					};
+				};
+			};
+		};
+	};
+
+
+	leds {
+		compatible = "gpio-leds";
+
+		heartbeat {
+			gpios = <&gpio 129 GPIO_ACTIVE_HIGH>;
+		};
+		identify {
+			gpios = <&gpio 58 GPIO_ACTIVE_LOW>;
+		};
+		beep {
+			gpios = <&gpio 111 GPIO_ACTIVE_HIGH>;
+		};
+	};
+};
+
