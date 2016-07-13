@@ -59,7 +59,7 @@
 						reg = <0x9C>;
 					};
 				};
-				i2c2: i2c-bus@80 {
+				i2c2: i2c-bus@c0 {
 					eeprom@AC {
 						compatible = "atmel,24c256";
 						reg = <0xAC>;
