@@ -75,13 +75,12 @@
 		compatible = "gpio-leds";
 
 		heartbeat {
-			gpios = <&gpio 129 GPIO_ACTIVE_HIGH>;
+			gpios = <&gpio 192 GPIO_ACTIVE_HIGH>;
+			linux,default-trigger = "heartbeat";
+			default-state = "on";
 		};
 		identify {
-			gpios = <&gpio 58 GPIO_ACTIVE_LOW>;
-		};
-		beep {
-			gpios = <&gpio 111 GPIO_ACTIVE_HIGH>;
+			gpios = <&gpio 66 GPIO_ACTIVE_LOW>;
 		};
 	};
 };
