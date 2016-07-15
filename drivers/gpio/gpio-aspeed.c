@@ -63,6 +63,11 @@ static const struct aspeed_gpio_bank aspeed_gpio_banks[] = {
 		.irq_regs = 0x0148,
 		.names = { 'U', 'V', 'W', 'X' },
 	},
+	{
+		.val_regs = 0x01E0,
+		.irq_regs = 0x0178,
+		.names = { 'Y', 'Z', '1', '2' },
+	},
 };
 
 #define GPIO_BANK(x)	((x) >> 5)
