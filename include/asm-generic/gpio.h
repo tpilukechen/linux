@@ -26,7 +26,7 @@
  */
 
 #ifndef ARCH_NR_GPIOS
-#define ARCH_NR_GPIOS		528
+#define ARCH_NR_GPIOS		536
 #endif
 
 /*

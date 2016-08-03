@@ -76,8 +76,6 @@
 
 		heartbeat {
 			gpios = <&gpio 192 GPIO_ACTIVE_HIGH>;
-			linux,default-trigger = "heartbeat";
-			default-state = "on";
 		};
 		identify {
 			gpios = <&gpio 66 GPIO_ACTIVE_LOW>;
