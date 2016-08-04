@@ -50,19 +50,19 @@
 		apb {
 			i2c: i2c@1e78a040 {
 				i2c1: i2c-bus@80 {
-					lm75@9E {
+					lm75@4F {
 						compatible = "national,lm75";
-						reg = <0x9E>;
+						reg = <0x4F>;
 					};
-					lm75@9C {
+					lm75@4E {
 						compatible = "national,lm75";
-						reg = <0x9C>;
+						reg = <0x4E>;
 					};
 				};
 				i2c2: i2c-bus@c0 {
-					eeprom@AC {
+					eeprom@56 {
 						compatible = "atmel,24c256";
-						reg = <0xAC>;
+						reg = <0x56>;
 						pagesize = <64>;
 					};
 				};
