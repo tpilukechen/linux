@@ -162,6 +162,12 @@ static void __init do_barreleye_setup(void)
 	/* Set debounce timer to 480000 cycles, with a pclk of 24MHz,
 	 * corresponds to 20 ms. This time was found by experimentation */
 	writel(0x00075300, AST_IO(AST_BASE_GPIO | 0x58));
+
+	/* Disable I2C device reset continuously,write 0 to bit2
+	 * to casuse asynchronously reset for I2C controllers */
+	reg = readl(AST_IO(AST_BASE_SCU | 0x04));
+	reg &= (~(1<<2));
+	writel(reg, AST_IO(AST_BASE_SCU | 0x04));
 }
 
 static void __init do_palmetto_setup(void)
