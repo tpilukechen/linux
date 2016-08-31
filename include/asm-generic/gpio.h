@@ -29,7 +29,7 @@
 #if defined(CONFIG_ARCH_NR_GPIO) && CONFIG_ARCH_NR_GPIO > 0
 #define ARCH_NR_GPIOS CONFIG_ARCH_NR_GPIO
 #else
-#define ARCH_NR_GPIOS		512
+#define ARCH_NR_GPIOS		536
 #endif
 #endif
 
