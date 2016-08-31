@@ -356,9 +356,7 @@
 					status = "disabled";
 					interrupts = <13>;
 				};
-
 			};
-
 		};
 	};
 };

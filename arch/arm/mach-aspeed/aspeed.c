@@ -185,6 +185,26 @@ static void __init do_garrison_setup(void)
 	writel(0xd7000000, AST_IO(AST_BASE_SCU | 0x88));
 }
 
+static void __init do_fox_setup(void)
+{
+	u32 reg;
+	
+	do_common_setup();
+
+	/* Setup PNOR address mapping for 32M flash */
+	writel(0x30000E00, AST_IO(AST_BASE_LPC | 0x88));
+	writel(0xFE0001FF, AST_IO(AST_BASE_LPC | 0x8C));
+
+	/* SCU setup */
+	writel(0x01C0007F, AST_IO(AST_BASE_SCU | 0x88));
+
+    /* Disable I2C reset */
+    reg = readl(AST_IO(AST_BASE_SCU | 0x04));
+    reg &= (~(1<<2));
+    writel(reg, AST_IO(AST_BASE_SCU | 0x04));
+
+}
+
 static void __init do_ast2500evb_setup(void)
 {
 	unsigned long reg;
@@ -235,6 +255,8 @@ static void __init aspeed_init_early(void)
 		do_palmetto_setup();
 	if (of_machine_is_compatible("ibm,garrison-bmc"))
 		do_garrison_setup();
+	if (of_machine_is_compatible("flex,fox-bmc"))
+		do_fox_setup();
 	if (of_machine_is_compatible("aspeed,ast2500-evb"))
 		do_ast2500evb_setup();
 
