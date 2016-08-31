@@ -1789,6 +1789,13 @@ config SENSORS_ULTRA45
 	  This driver provides support for the Ultra45 workstation environmental
 	  sensors.
 
+config SENSORS_ASPEED_PWM
+	tristate "Aspeed PWM driver"
+	depends on ARCH_ASPEED
+	help
+	  If you say yes here you get support PWM control and TACH monitor function
+	  for Aspeed 2400 chip.
+
 if ACPI
 
 comment "ACPI drivers"

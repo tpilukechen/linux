@@ -85,6 +85,7 @@ static void __init aspeed_dt_init(void)
 #define AST_BASE_MAC0		0X1E660000 /* MAC 1 */
 #define AST_BASE_SCU		0x1E6E2000 /* System Control Unit (SCU) */
 #define AST_BASE_GPIO		0x1E780000 /* GPIO Controller */
+#define AST_BASE_PWM		0x1E786000 /* PWM & Tach Controller */
 
 static struct map_desc aspeed_io_desc[] __initdata __maybe_unused = {
 	{
@@ -203,6 +204,34 @@ static void __init do_fox_setup(void)
     reg &= (~(1<<2));
     writel(reg, AST_IO(AST_BASE_SCU | 0x04));
 
+	/* Init PWM & Tach hardware */
+	reg = readl(AST_IO(AST_BASE_SCU | 0x04));
+	reg &= ~(0x200);
+	writel(reg, AST_IO(AST_BASE_SCU | 0x04));
+
+	/* Enable PWM clock */
+	writel(0x00000001, AST_IO(AST_BASE_PWM));
+
+	/* Enable PWM clock to 24Mhz */
+	writel(0xFF11FF11, AST_IO(AST_BASE_PWM | 0x04));
+
+	/* initialize all channels to the highest speed (0x100) */
+	writel(0x0, AST_IO(AST_BASE_PWM | 0x08));
+	writel(0x0, AST_IO(AST_BASE_PWM | 0x0C));
+	writel(0x0, AST_IO(AST_BASE_PWM | 0x48));
+	writel(0x0, AST_IO(AST_BASE_PWM | 0x4C));
+
+	/* Set tacho type M/N Setting */
+	/* 0x1000 = 4096 */
+	writel(0x10000001, AST_IO(AST_BASE_PWM | 0x10));
+	writel(0x10000001, AST_IO(AST_BASE_PWM | 0x18));
+
+	/* Full Range to do measure */
+	/* 0x1000 = 4096 */
+	writel(0x10000001, AST_IO(AST_BASE_PWM | 0x14));
+	writel(0x10000001, AST_IO(AST_BASE_PWM | 0x1C));
+
+	writel(0x0, AST_IO(AST_BASE_PWM | 0x20));
 }
 
 static void __init do_ast2500evb_setup(void)

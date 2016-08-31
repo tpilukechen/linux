@@ -75,6 +75,10 @@
 	status = "okay";
 };
 
+&pwm {
+	status = "okay";
+};
+
 &i2c1 {
 	status = "okay";
 

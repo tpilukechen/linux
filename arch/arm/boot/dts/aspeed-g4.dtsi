@@ -357,6 +357,15 @@
 					interrupts = <13>;
 				};
 			};
+
+            pwm: pwm@1E786000 {
+                compatible = "aspeed,aspeed-pwm";
+                reg = <0x1E786000 0x1000>;
+                interrupts = <28>;
+                status = "disabled";
+                clocks = <&clk_apb>;
+                #pwm-cells= <2>;
+            };
 		};
 	};
 };
